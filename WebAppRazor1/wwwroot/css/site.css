@@ -6,6 +6,9 @@ html {
   html {
     font-size: 16px;
   }
+  .pagina {
+    width: 100%;
+  }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {

@@ -4,8 +4,57 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h4 class="display-4">Bienvenido a la web de arte digital más novedosa.</h4>
-    <p>Aquí podrás buscar arte y diseñadores para tus necesidades.</p>
-    <p></p>
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h4 class="display-4">Lista de tareas asignadas</h4>
+        <p class="lead">Administra tus tareas pendientes y completadas</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="btn-group" role="group">
+                <a asp-page="./Index" asp-route-estado="Todos"
+                   class="btn" >
+                    Todas
+                </a>
+                <a asp-page="./Index" asp-route-estado="Pendientes"
+                   class="btn" >
+                    Pendientes
+                </a>
+                <a asp-page="./Index" asp-route-estado="Completadas"
+                   class="btn" >
+                    Completadas
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+            <a asp-page="/CrearTarea" class="btn btn-success">Nueva Tarea</a>
+        </div>
+    </div>
+
+    <!-- Lista de tareas -->
+    <div class="row">
+        <div class="col-12">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre de la tarea</th>
+                        <th>Desccripción</th>
+                        <th>Fecha de vencimiento</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Terminar web</td>
+                        <td>Agregar funcionalidades</td>
+                        <td>17/08/2025</td>
+                        <td>Completada</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

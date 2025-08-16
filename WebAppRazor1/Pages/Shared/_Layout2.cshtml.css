@@ -1,0 +1,160 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    background-color: darkslategrey;
+    color: orangered;
+}
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #000;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: darkslategrey;
+    color: orangered;
+}
+
+footer .container {
+    color: orangered;
+    width: 100%;
+}
+
+
+/*Nuevos cambios*/
+
+/* Sección Superior */
+.top-header {
+    background-color: #212529;
+    color: orangered;
+    padding: 15px 0;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    top: 0;
+    position: sticky;
+}
+
+.top-header .container-fluid {
+   padding: 0 20px;
+}
+
+.site-title {
+    margin: 0;
+    font-size: 1.8rem;
+    color: orangered;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.header-link {
+    color: orangered;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid orangered;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.header-link:hover {
+    background-color: orangered;
+    color: #212529;
+}
+
+/* Ajustes para el wrapper con el nuevo header */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    min-height: calc(100vh - 60px); 
+    margin-top: 60px;
+}
+
+/* Ajuste para el sidebar */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: calc(100vh - 60px);
+    background: #343a40;
+    color: #fff;
+    transition: all 0.3s;
+    padding: 20px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+}
+
+#sidebarCollapse {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+/* Ajuste para el contenido principal */
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: calc(100vh - 120px);
+    transition: all 0.3s;
+    margin-left: 230px; 
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+        top: 60px;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    #content {
+        margin-left: 0;
+    }
+
+    #sidebarCollapse {
+        display: block;
+    }
+}
+
+
+
