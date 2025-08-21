@@ -14,6 +14,12 @@ namespace WebAppRazor1.Pages
         public int TotalPaginas { get; set; }
         public int TamanoPagina { get; set; } = 5;//Cambiar de manera dinámica este número en un pequeño input
 
+        /*Trabajar index Filtrar pendiente y en curso
+         * Añadir el botón crear Tarea: desplegar un formulario para la nueva tarea
+         * Link de tareas finalizadas
+         * Link tareas canceladas
+         */
+
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -32,12 +38,20 @@ namespace WebAppRazor1.Pages
 
             // Agregar un filtro
             // Filtrar por estado si se recibe
-            if (!string.IsNullOrWhiteSpace(estado))
+            /*if (!string.IsNullOrWhiteSpace(estado))
             {
                 todasLasTareas = todasLasTareas
-                    .Where(t => t.estado.Equals(estado, StringComparison.OrdinalIgnoreCase))
+                    .Where(t => t.estado == estado)
                     .ToList();
             }
+            else
+            {
+                
+            }*/
+
+            todasLasTareas = todasLasTareas
+                .Where(t => t.estado == "Pendiente" || t.estado == "En curso")
+                .ToList();
 
             // Lógica de paginación
             TamanoPagina = tamanoPagina < 1 ? 5 : tamanoPagina;
