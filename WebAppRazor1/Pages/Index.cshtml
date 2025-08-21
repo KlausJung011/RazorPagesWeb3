@@ -10,51 +10,218 @@
         <p class="lead">Administra tus tareas pendientes y completadas</p>
     </div>
 
-    <!-- Filtros -->
+    <!-- Filtros y botón nueva tarea -->
     <div class="row mb-4">
         <div class="col-md-6">
             <div class="btn-group" role="group">
-                <a asp-page="./Index" asp-route-estado="Todos"
-                   class="btn" >
-                    Todas
-                </a>
-                <a asp-page="./Index" asp-route-estado="Pendientes"
-                   class="btn" >
-                    Pendientes
-                </a>
-                <a asp-page="./Index" asp-route-estado="Completadas"
-                   class="btn" >
-                    Completadas
-                </a>
+                <button class="btn btn-primary">Todas</button>
+                <button class="btn btn-outline-primary">Pendientes</button>
+                <button class="btn btn-outline-primary">Completadas</button>
             </div>
         </div>
         <div class="col-md-6 text-end">
-            <a asp-page="/CrearTarea" class="btn btn-success">Nueva Tarea</a>
+            <button class="btn btn-success">Nueva Tarea</button>
         </div>
     </div>
 
-    <!-- Lista de tareas -->
-    <div class="row">
-        <div class="col-12">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre de la tarea</th>
-                        <th>Desccripción</th>
-                        <th>Fecha de vencimiento</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Terminar web</td>
-                        <td>Agregar funcionalidades</td>
-                        <td>17/08/2025</td>
-                        <td>Completada</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Tabla de tareas -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Estado</th>
+                            <th>Título</th>
+                            <th>Fecha Vencimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="badge bg-warning">Pendiente</span>
+                            </td>
+                            <td>
+                                <strong>Diseñar logo corporativo</strong>
+                            </td>
+                            <td>15/12/2024</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-success" title="Marcar como completada">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                    <button class="btn btn-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        
+                        @foreach (var tarea in Model.Tareas)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="badge @(tarea.estado switch {
+                                        "Pendiente" => "bg-warning text-dark",
+                                        "En curso" => "bg-info",
+                                        "Finalizado" => "bg-success",
+                                        "Cancelado" => "bg-danger",
+                                        _ => "bg-secondary"
+                                        })">
+                                        @tarea.estado
+                                    </span>
+                                </td>
+                                <td>
+                                    <strong>@tarea.nombreTarea</strong>
+                                </td>
+                                <td>@tarea.fechaVencimiento</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-success" title="Marcar como completada">
+                                            <i class="bi bi-check-circle"></i>
+                                        </button>
+                                        <button class="btn btn-primary" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        
+                        <!-- Tarea 2 - Completada -->
+                        <!--
+                        <tr class="table-success">
+                            <td>
+                                <span class="badge bg-success">Completada</span>
+                            </td>
+                            <td>
+                                <strong>Revisar documentación</strong>
+                            </td>
+                            <td>Revisar y aprobar documentación del proyecto Alpha</td>
+                            <td>10/12/2024</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary" disabled title="Ya completada">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                    <button class="btn btn-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>-->
+
+                        <!-- Tarea 3 - Pendiente (Próxima a vencer) -->
+                        <!--
+                        <tr>
+                            <td>
+                                <span class="badge bg-danger">Urgente</span>
+                            </td>
+                            <td>
+                                <strong>Reunión con cliente</strong>
+                            </td>
+                            <td>Presentación de avances del proyecto Beta</td>
+                            <td>12/12/2024</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-success" title="Marcar como completada">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                    <button class="btn btn-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>-->
+
+                        <!-- Tarea 4 - Pendiente -->
+                        <!--
+                        <tr>
+                            <td>
+                                <span class="badge bg-info">En progreso</span>
+                            </td>
+                            <td>
+                                <strong>Desarrollo API</strong>
+                            </td>
+                            <td>Implementar endpoints para módulo de usuarios</td>
+                            <td>20/12/2024</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-success" title="Marcar como completada">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                    <button class="btn btn-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>-->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <!-- Paginación -->
+    <div class="row mt-4">
+        <nav>
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                        <a class="page-link" asp-page="./index" asp-route-pagina="@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Estadísticas -->
+    <!--
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total tareas</h5>
+                    <h3 class="card-text">4</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Completadas</h5>
+                    <h3 class="card-text">1</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Pendientes</h5>
+                    <h3 class="card-text">3</h3>
+                </div>
+            </div>
+        </div>
+    </div>-->
 </div>
+
+<!-- Bootstrap Icons (agregar en tu layout o aquí) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">

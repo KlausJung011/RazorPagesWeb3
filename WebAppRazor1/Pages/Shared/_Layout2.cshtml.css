@@ -11,6 +11,10 @@ a.navbar-brand {
   text-align: center;
   word-break: break-all;
 }
+.nav-link. nav-item{
+    color: red;
+    background-color: gray;
+}
 
 .btn-primary {
   color: #fff;
@@ -124,7 +128,7 @@ a {
 
 #sidebarCollapse {
     margin-top: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* Ajuste para el contenido principal */
@@ -135,6 +139,95 @@ a {
     transition: all 0.3s;
     margin-left: 230px; 
 }
+
+v
+
+/* Estilos para la tabla de tareas */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Badges personalizados */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.4em 0.6em;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Botones de acción */
+.btn-group-sm .btn {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.2rem;
+}
+
+/* Tarjetas de estadísticas */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-responsive {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .btn-group-sm .btn {
+        margin-bottom: 0.25rem;
+    }
+
+    .text-end {
+        text-align: left !important;
+        margin-top: 1rem;
+    }
+}
+
+/* Estados de las tareas */
+.table-success {
+    background-color: rgba(40, 167, 69, 0.1) !important;
+}
+
+/* Efectos hover para botones */
+.btn:hover {
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* ----------------------------------------------------------------- */
+
 
 /* Responsive */
 @media (max-width: 768px) {
