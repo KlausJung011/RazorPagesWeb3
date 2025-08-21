@@ -13,11 +13,20 @@
     <!-- Filtros y botón nueva tarea -->
     <div class="row mb-4">
         <div class="col-md-6">
-            <div class="btn-group" role="group">
-                <button class="btn btn-primary">Todas</button>
-                <button class="btn btn-outline-primary">Pendientes</button>
-                <button class="btn btn-outline-primary">Completadas</button>
-            </div>
+            <form method="get" class="btn-group" role="group">
+                <input type="hidden" name="pagina" value="@Model.PaginaActual" />
+                <button type="submit" name="estado" value="" class="btn @(string.IsNullOrEmpty(Request.Query["estado"]) ? "btn-primary" : "btn-outline-primary")">
+                    Todas
+                </button>
+                <button type="submit" name="estado" value="Pendiente" class="btn @(Request.Query["estado"] == "Pendiente" ? "btn-primary" : "btn-outline-primary")">
+                    Pendientes
+                </button>
+                <button type="submit" name="estado" value="Finalizado" class="btn @(Request.Query["estado"] == "Finalizado" ? "btn-primary" : "btn-outline-primary")">
+                    Completadas
+                </button>
+                <span class="ms-3">Filas por página:</span>
+                <input type="number" name="tamanoPagina" min="1" max="100" value="@Model.TamanoPagina" class="form-control" style="width:80px;" />
+            </form>
         </div>
         <div class="col-md-6 text-end">
             <button class="btn btn-success">Nueva Tarea</button>
@@ -38,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <!--<tr>
                             <td>
                                 <span class="badge bg-warning">Pendiente</span>
                             </td>
@@ -59,9 +68,7 @@
                                     </button>
                                 </div>
                             </td>
-                        </tr>
-
-                        
+                        </tr>-->
                         @foreach (var tarea in Model.Tareas)
                         {
                             <tr>
@@ -95,84 +102,6 @@
                                 </td>
                             </tr>
                         }
-                        
-                        <!-- Tarea 2 - Completada -->
-                        <!--
-                        <tr class="table-success">
-                            <td>
-                                <span class="badge bg-success">Completada</span>
-                            </td>
-                            <td>
-                                <strong>Revisar documentación</strong>
-                            </td>
-                            <td>Revisar y aprobar documentación del proyecto Alpha</td>
-                            <td>10/12/2024</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-outline-secondary" disabled title="Ya completada">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                    <button class="btn btn-primary" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>-->
-
-                        <!-- Tarea 3 - Pendiente (Próxima a vencer) -->
-                        <!--
-                        <tr>
-                            <td>
-                                <span class="badge bg-danger">Urgente</span>
-                            </td>
-                            <td>
-                                <strong>Reunión con cliente</strong>
-                            </td>
-                            <td>Presentación de avances del proyecto Beta</td>
-                            <td>12/12/2024</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-success" title="Marcar como completada">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                    <button class="btn btn-primary" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>-->
-
-                        <!-- Tarea 4 - Pendiente -->
-                        <!--
-                        <tr>
-                            <td>
-                                <span class="badge bg-info">En progreso</span>
-                            </td>
-                            <td>
-                                <strong>Desarrollo API</strong>
-                            </td>
-                            <td>Implementar endpoints para módulo de usuarios</td>
-                            <td>20/12/2024</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-success" title="Marcar como completada">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                    <button class="btn btn-primary" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -191,36 +120,11 @@
                 }
             </ul>
         </nav>
+        <!--<form method="get" class="d-flex justify-content-center align-items-center ms-2" style="gap:8px;">
+            <input type="number" name="pagina" min="1" max="@Model.TotalPaginas" class="form-control" style="width:80px;" placeholder="Página" required />
+            <button type="submit" class="btn btn-outline-primary">Ir</button>
+        </form>-->
     </div>
-
-    <!-- Estadísticas -->
-    <!--
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Total tareas</h5>
-                    <h3 class="card-text">4</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Completadas</h5>
-                    <h3 class="card-text">1</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-warning mb-3">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Pendientes</h5>
-                    <h3 class="card-text">3</h3>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <!-- Bootstrap Icons (agregar en tu layout o aquí) -->

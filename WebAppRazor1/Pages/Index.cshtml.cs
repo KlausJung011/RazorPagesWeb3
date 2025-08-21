@@ -21,7 +21,7 @@ namespace WebAppRazor1.Pages
             _logger = logger;
         }
 
-        public void OnGet(int pagina = 1)
+        public void OnGet(int pagina = 1, string estado = "", int tamanoPagina = 5)
         {
             // Ruta al archivo JSON (asegúrate de que exista en tu proyecto)
             string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "tareas.json");
@@ -31,8 +31,16 @@ namespace WebAppRazor1.Pages
             var todasLasTareas = JsonSerializer.Deserialize<List<Tarea>>(jsonContent);
 
             // Agregar un filtro
+            // Filtrar por estado si se recibe
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                todasLasTareas = todasLasTareas
+                    .Where(t => t.estado.Equals(estado, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
 
             // Lógica de paginación
+            TamanoPagina = tamanoPagina < 1 ? 5 : tamanoPagina;
             PaginaActual = pagina < 1 ? 1 : pagina;
             TotalPaginas = (int)Math.Ceiling(todasLasTareas.Count / (double)TamanoPagina);
             Tareas = todasLasTareas.Skip((PaginaActual - 1) * TamanoPagina).Take(TamanoPagina).ToList();

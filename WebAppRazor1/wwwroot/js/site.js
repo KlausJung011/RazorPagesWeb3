@@ -7,4 +7,27 @@ $(document).ready(function () {
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
+    // Cerrar sidebar al hacer clic fuera de él en móviles
+    $(document).on('click', function (e) {
+        if ($(window).width() <= 768) {
+            if (!$(e.target).closest('#sidebar, #sidebarCollapse').length) {
+                $('#sidebar').removeClass('active');
+            }
+        }
+    });
+
+    // Manejar redimensionamiento de ventana
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) {
+            $('#sidebar').removeClass('active');
+        }
+    });
+
+    // Mejorar accesibilidad - cerrar con tecla Escape
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' && $('#sidebar').hasClass('active')) {
+            $('#sidebar').removeClass('active');
+            $('#sidebarCollapse').focus();
+        }
+    });
 });
