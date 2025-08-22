@@ -7,28 +7,14 @@ using WebAppRazor1.Models;
 
 namespace WebAppRazor1.Pages
 {
-    public class IndexModel : PageModel
+    public class Tareas_finalizadasModel : PageModel
     {
         public List<Tarea> Tareas { get; set; }
         public int PaginaActual { get; set; }
         public int TotalPaginas { get; set; }
-        public int TamanoPagina { get; set; } = 5;//Cambiar de manera dinámica este número en un pequeño input
-        public string EstadoTarea { get; set; }
+        public int TamanoPagina { get; set; } = 5;
 
-        /*Trabajar index Filtrar pendiente y en curso
-         * Añadir el botón crear Tarea: desplegar un formulario para la nueva tarea
-         * Link de tareas finalizadas
-         * Link tareas canceladas
-         */
-
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
-
-        public void OnGet(int pagina = 1, string estado = "", int tamanoPagina = 5)
+        public void OnGet(int pagina = 1, int tamanoPagina = 5)
         {
             // Ruta al archivo JSON (asegúrate de que exista en tu proyecto)
             string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "tareas.json");
@@ -38,19 +24,9 @@ namespace WebAppRazor1.Pages
             var todasLasTareas = JsonSerializer.Deserialize<List<Tarea>>(jsonContent);
 
             // Agregar un filtro
-            // Filtrar por estado si se recibe
-            if (!string.IsNullOrWhiteSpace(estado))
-            {
-                todasLasTareas = todasLasTareas
-                    .Where(t => t.estado == estado)
-                    .ToList();
-            }
-            else
-            {
-                todasLasTareas = todasLasTareas
-                .Where(t => t.estado == "Pendiente" || t.estado == "En curso")
+            todasLasTareas = todasLasTareas
+                .Where(t => t.estado == "Finalizado")
                 .ToList();
-            }
 
             // Lógica de paginación
             TamanoPagina = tamanoPagina < 1 ? 5 : tamanoPagina;
