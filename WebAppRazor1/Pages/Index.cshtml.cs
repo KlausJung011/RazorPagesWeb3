@@ -17,8 +17,10 @@ namespace WebAppRazor1.Pages
 
         /*Trabajar index Filtrar pendiente y en curso
          * Añadir el botón crear Tarea: desplegar un formulario para la nueva tarea
+         * Se pueden editar los datos de las tareas en curso y pendientes: cambiar su estado, nombres o fechas
          * Link de tareas finalizadas
          * Link tareas canceladas
+         * 
          */
 
         private readonly ILogger<IndexModel> _logger;
