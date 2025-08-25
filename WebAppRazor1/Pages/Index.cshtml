@@ -32,7 +32,9 @@
                 <input type="number" name="tamanoPagina" min="1" max="99" value="@Model.TamanoPagina"
                        class="form-control" style="width:80px;"
                        onchange="this.form.submit()" />
-                <button class="btn btn-success ms-3">Nueva Tarea</button>
+                <button type="button" class="btn btn-success ms-3" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
+                    Nueva Tarea
+                </button>
             </form>
         </div>
     </div>
@@ -96,18 +98,122 @@
                                         <button class="btn btn-success" title="Marcar como completada">
                                             <i class="bi bi-check-circle"></i>
                                         </button>
-                                        <button class="btn btn-primary" title="Editar">
+                                        <button type="button"
+                                                class="btn btn-primary"
+                                                title="Editar"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEditar-@tarea.idTarea">
                                             <i class="bi bi-pencil"></i>
                                         </button>
                                         <button class="btn btn-danger" title="Eliminar">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
+                                    <!-- Modal Editar por fila -->
+                                    @{
+                                        var iso = tarea.fechaVencimiento;
+                                        if (DateTime.TryParseExact(
+                                                tarea.fechaVencimiento,
+                                                "dd/MM/yyyy",
+                                                System.Globalization.CultureInfo.InvariantCulture,
+                                                System.Globalization.DateTimeStyles.None,
+                                                out var dt))
+                                        {
+                                            iso = dt.ToString("yyyy-MM-dd");
+                                        }
+                                    }
+                                    <div class="modal fade" id="modalEditar-@tarea.idTarea" tabindex="-1" aria-labelledby="modalEditarLabel-@tarea.idTarea" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form method="post" asp-page-handler="Edit">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalEditarLabel-@tarea.idTarea">Editar tarea</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="EditId" value="@tarea.idTarea" />
+                                                        <!-- Preservar paginación/filtro -->
+                                                        <input type="hidden" name="pagina" value="@Model.PaginaActual" />
+                                                        <input type="hidden" name="estado" value="@Model.EstadoTarea" />
+                                                        <input type="hidden" name="tamanoPagina" value="@Model.TamanoPagina" />
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nombre</label>
+                                                            <input type="text" name="EditNombre" class="form-control" value="@tarea.nombreTarea" required />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Fecha de vencimiento</label>
+                                                            <input type="date" name="EditFecha" class="form-control" value="@iso" required />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Estado</label>
+                                                            <select name="EditEstado" class="form-select" required>
+                                                                @{
+                                                                    var estados = new[] { "Pendiente", "En curso", "Finalizado", "Cancelado" };
+                                                                }
+                                                                @foreach (var est in estados)
+                                                                {
+                                                                    if (tarea.estado == est)
+                                                                    {
+                                                                        <option value="@est" selected>@est</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@est">@est</option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nueva Tarea -->
+    <div class="modal fade" id="modalNuevaTarea" tabindex="-1" aria-labelledby="modalNuevaTareaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" asp-page-handler="Create">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNuevaTareaLabel">Nueva tarea</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Preservar paginación/filtro -->
+                        <input type="hidden" name="pagina" value="@Model.PaginaActual" />
+                        <input type="hidden" name="estado" value="@Model.EstadoTarea" />
+                        <input type="hidden" name="tamanoPagina" value="@Model.TamanoPagina" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="NuevaNombre" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de vencimiento</label>
+                            <input type="date" name="NuevaFecha" class="form-control" required />
+                        </div>
+                        <div class="alert alert-info py-2">
+                            El estado se guardará como <strong>Pendiente</strong>.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Crear tarea</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
